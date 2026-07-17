@@ -1,21 +1,26 @@
 """
 可插拔的语音模型接口：端到端（end-to-end）与级联（cascaded）两种范式。
 
-对应《深入理解 AI Agent》实验 9-3「使用 Step-Audio R1 实现端到端语音思考」。
+对应《深入理解 AI Agent》实验 9-4「使用 Step-Audio R1 实现端到端语音思考」。
 
-- 端到端（EndToEndSpeechModel）：单一模型直接「听 → 想 → 说」，以 Step-Audio R1
-  为代表。书中范式讨论指出：端到端在隐空间中直接传递副语言信息（情绪、语气、
-  语速、环境声），延迟更低、韵律更自然，但需多卡 GPU 部署，无现成公开 endpoint。
-  这里保留一个可插拔接口：仅当配置了 STEP_AUDIO_ENDPOINT 时才可调用，否则不可用。
+- 端到端（EndToEndSpeechModel）：单一模型直接「听 → 想 → 说」，音频进、音频出，
+  中间没有暴露给外部的纯文本推理阶段。Step-Audio R1 是书中的代表模型（音频编码器
+  + 音频适配器 + Qwen2.5 32B 解码器，需多卡 GPU，无公开 endpoint）。为了让读者不
+  依赖自建 GPU 集群也能真实跑通「端到端语音思考」这一范式，本 demo 默认改用 OpenAI
+  的 speech-to-speech 模型 `gpt-audio`：它同样是「音频 → 单模型 → 音频」，一次调用
+  就同时返回语音答案与其文字转写，不经过独立的 ASR/LLM/TTS 三段。若你已经自行部署
+  了真正的 Step-Audio R1，把服务地址写入 STEP_AUDIO_ENDPOINT 即可切换到它。
 
 - 级联（CascadedSpeechModel）：把 ASR → LLM → TTS 三个独立模型串成流水线，
   一棒接一棒。可用 OpenAI 的 whisper-1 / gpt-4o-mini / tts-1 真实跑通完整闭环。
   代价：模型间以离散文本接口相连，说话人的情绪、语气、语调等副语言信息在交接时
-  几乎损失殆尽（见 chapter9.md 范式一 · 级联流水线）。
+  几乎损失殆尽（见 chapter9.md 范式二 · 端到端全模态模型）。这一路在 demo 中作为
+  与端到端对照的**基线**。
 """
 
 from __future__ import annotations
 
+import base64
 import os
 import time
 from dataclasses import dataclass, field
@@ -29,13 +34,13 @@ from openai import OpenAI
 # ---------------------------------------------------------------------------
 @dataclass
 class StageResult:
-    """级联流水线中单个阶段的结果与延迟。"""
+    """流水线中单个阶段的结果与延迟。"""
 
     name: str          # 阶段名（如 "ASR 语音识别"）
     model: str         # 使用的模型
     latency_s: float   # 该阶段耗时（秒）
-    text: Optional[str] = None       # 文本产物（ASR 转写 / LLM 回答）
-    audio_path: Optional[str] = None # 音频产物（TTS 合成）
+    text: Optional[str] = None       # 文本产物（ASR 转写 / LLM 回答 / 端到端转写）
+    audio_path: Optional[str] = None # 音频产物（TTS 合成 / 端到端语音答案）
 
 
 @dataclass
@@ -53,51 +58,61 @@ class PipelineResult:
 
 
 # ---------------------------------------------------------------------------
-# 端到端范式（占位，需部署 Step-Audio R1）
+# 端到端范式（可运行：默认 gpt-audio；可切换到自部署的 Step-Audio R1）
 # ---------------------------------------------------------------------------
 class EndToEndSpeechModel:
-    """端到端语音思考模型接口（以 Step-Audio R1 为例）。
+    """端到端语音思考模型：音频进 → 单模型「听→想→说」→ 音频出。
 
-    真实部署：Step-Audio R1 由音频编码器 + 音频适配器 + Qwen2.5 32B 解码器组成，
-    需多卡 GPU。它通过 MGRD（模态锚定思考蒸馏）真正基于声学特征思考，并通过
-    MPS 双脑架构实现「边想边说」的低延迟表达。
+    两种后端，二选一：
 
-    本类只是一个可插拔占位：若环境变量 STEP_AUDIO_ENDPOINT 已配置，则向该 endpoint
-    发送音频并取回音频；否则 available == False，调用 run() 会抛出说明性异常。
+    1. **gpt-audio（默认，OpenAI）**：真正的 speech-to-speech 模型，通过 Chat
+       Completions 调用（modalities=["text","audio"]，audio={voice,format}，
+       user 消息里放一个 input_audio 内容块）。一次调用即返回语音答案 + 其转写，
+       中间没有独立的 ASR/LLM/TTS 阶段——这正是端到端范式的形态。模型名可用
+       环境变量 E2E_MODEL 覆盖（默认 gpt-audio）。
+
+    2. **Step-Audio R1（可选，自部署）**：书中的端到端语音思考模型，由音频编码器 +
+       音频适配器 + Qwen2.5 32B 解码器组成，需多卡 GPU，无公开 endpoint。它通过
+       MGRD（模态锚定思考蒸馏）真正基于声学特征思考，并通过 MPS 双脑架构实现
+       「边想边说」。若配置了 STEP_AUDIO_ENDPOINT，本类改为向该地址上传音频、取回
+       音频（请求体因部署方案而异，见 run() 中的骨架，接入时按需改写）。
     """
 
-    def __init__(self) -> None:
+    def __init__(
+        self,
+        client: OpenAI,
+        model: Optional[str] = None,
+        voice: str = "alloy",
+        system_prompt: Optional[str] = None,
+    ) -> None:
+        self.client = client
+        self.model = model or os.getenv("E2E_MODEL", "gpt-audio")
+        self.voice = voice
         self.endpoint = os.getenv("STEP_AUDIO_ENDPOINT", "").strip()
+        self.system_prompt = system_prompt or (
+            "你是一个中文语音助手。请先在内部完成必要的推理，再用简洁、口语化、"
+            "适合朗读的中文说出结论，控制在三句话以内。"
+        )
 
     @property
-    def available(self) -> bool:
-        return bool(self.endpoint)
+    def backend(self) -> str:
+        """当前生效的端到端后端标识。"""
+        return "step-audio-r1" if self.endpoint else "gpt-audio"
 
-    def run(self, input_audio: str, output_audio: str) -> PipelineResult:
-        if not self.available:
-            raise RuntimeError(
-                "端到端模型（Step-Audio R1）不可用：未配置 STEP_AUDIO_ENDPOINT。\n"
-                "Step-Audio R1 无公开 endpoint，需自行多卡 GPU 部署后，将服务地址\n"
-                "写入 STEP_AUDIO_ENDPOINT 环境变量。本 demo 以级联基线跑通完整闭环。"
-            )
-
-        # 说明：以下为真实部署时的调用骨架。不同部署方案（vLLM / 自定义 HTTP 服务）
-        # 的请求体各异，此处给出最常见的「上传音频、取回音频」形态，供接入时改写。
+    # -- 后端一：自部署 Step-Audio R1（可选） --------------------------------
+    def _run_step_audio(self, input_audio: str, output_audio: str) -> PipelineResult:
+        # 不同部署方案（vLLM / 自定义 HTTP 服务）的请求体各异，此处给出最常见的
+        # 「上传音频、取回音频」形态，供接入真实 Step-Audio R1 时改写。
         import requests  # 延迟导入：仅在真正配置 endpoint 时才需要该依赖
 
         t0 = time.perf_counter()
         with open(input_audio, "rb") as f:
-            resp = requests.post(
-                self.endpoint,
-                files={"audio": f},
-                timeout=120,
-            )
+            resp = requests.post(self.endpoint, files={"audio": f}, timeout=120)
         resp.raise_for_status()
         with open(output_audio, "wb") as out:
             out.write(resp.content)
         latency = time.perf_counter() - t0
 
-        # 端到端只有「一段」：听→想→说融合在单次前向中，无法拆分中间文本
         stage = StageResult(
             name="端到端（听→想→说，单模型融合）",
             model="Step-Audio R1",
@@ -111,9 +126,66 @@ class EndToEndSpeechModel:
             stages=[stage],
         )
 
+    # -- 后端二：gpt-audio speech-to-speech（默认） --------------------------
+    def _run_gpt_audio(self, input_audio: str, output_audio: str) -> PipelineResult:
+        in_fmt = "mp3" if input_audio.lower().endswith(".mp3") else "wav"
+        out_fmt = "wav" if output_audio.lower().endswith(".wav") else "mp3"
+        with open(input_audio, "rb") as f:
+            in_b64 = base64.b64encode(f.read()).decode()
+
+        t0 = time.perf_counter()
+        resp = self.client.chat.completions.create(
+            model=self.model,
+            modalities=["text", "audio"],
+            audio={"voice": self.voice, "format": out_fmt},
+            messages=[
+                {"role": "system", "content": self.system_prompt},
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "input_audio",
+                            "input_audio": {"data": in_b64, "format": in_fmt},
+                        }
+                    ],
+                },
+            ],
+        )
+        latency = time.perf_counter() - t0
+
+        audio = resp.choices[0].message.audio
+        if audio is None or not audio.data:
+            raise RuntimeError(
+                f"端到端模型 {self.model} 未返回音频。请确认该 Key 有权访问 gpt-audio，"
+                "或用 E2E_MODEL 指定可用的 speech-to-speech 模型。"
+            )
+        with open(output_audio, "wb") as out:
+            out.write(base64.b64decode(audio.data))
+
+        # 端到端只有「一段」：听→想→说融合在单次前向中。transcript 是模型顺带
+        # 吐出的语音文字稿，并非一个独立的、可供 TTS 消费的中间文本阶段。
+        stage = StageResult(
+            name="端到端（听→想→说，单模型一次调用）",
+            model=self.model,
+            latency_s=latency,
+            text=audio.transcript,
+            audio_path=output_audio,
+        )
+        return PipelineResult(
+            paradigm="end_to_end",
+            input_audio=input_audio,
+            output_audio=output_audio,
+            stages=[stage],
+        )
+
+    def run(self, input_audio: str, output_audio: str) -> PipelineResult:
+        if self.endpoint:
+            return self._run_step_audio(input_audio, output_audio)
+        return self._run_gpt_audio(input_audio, output_audio)
+
 
 # ---------------------------------------------------------------------------
-# 级联范式（可运行基线）
+# 级联范式（对照基线）
 # ---------------------------------------------------------------------------
 class CascadedSpeechModel:
     """级联语音流水线：ASR → LLM → TTS，三个独立模型串联。
@@ -216,6 +288,6 @@ def synthesize_question_audio(
     tts_model: str = "tts-1",
     voice: str = "shimmer",
 ) -> None:
-    """用 TTS 先合成一段「用户提问」的语音，作为级联管道的输入。"""
+    """用 TTS 先合成一段「用户提问」的语音，作为两条管道共同的输入。"""
     resp = client.audio.speech.create(model=tts_model, voice=voice, input=question_text)
     resp.stream_to_file(output_audio)
