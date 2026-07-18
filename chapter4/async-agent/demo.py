@@ -37,26 +37,44 @@ from runtime import AgentRuntime
 # openai 仅在运行 LLM 场景时才惰性导入；离线演示不碰它，保证无 key/无 openai 也能跑。
 
 
+def _completion_params_for(model: str) -> dict:
+    """按模型返回安全的采样参数。
+
+    Moonshot kimi-k3 是【推理模型】：必须 temperature=1 且 max_tokens>=2048，
+    否则可能报错或截断。其余模型用 temperature=0.2 保证决策稳定。
+    """
+    if model.startswith("kimi-k3"):
+        return {"temperature": 1, "max_tokens": 4096}
+    return {"temperature": 0.2}
+
+
 def make_client():
-    """按 LLM_PROVIDER 选择可用的模型服务（默认 openai）。"""
+    """按 LLM_PROVIDER 选择可用的模型服务（默认 openai）。
+
+    返回 (client, model, completion_params)。
+    """
     from openai import AsyncOpenAI  # 惰性导入：离线演示无需安装 openai
     provider = os.getenv("LLM_PROVIDER", "openai").lower()
     if provider == "moonshot":
         key = os.environ["MOONSHOT_API_KEY"]
-        model = os.getenv("LLM_MODEL", "moonshot-v1-8k")
-        return AsyncOpenAI(api_key=key, base_url="https://api.moonshot.cn/v1"), model
+        # 默认用当前的推理模型 kimi-k3（旧的 kimi-k2-*-preview 与 moonshot-v1-* 均已过时/停用）。
+        model = os.getenv("LLM_MODEL", "kimi-k3")
+        client = AsyncOpenAI(api_key=key, base_url="https://api.moonshot.cn/v1")
+        return client, model, _completion_params_for(model)
     if provider == "ark":
         key = os.environ["ARK_API_KEY"]
         model = os.getenv("LLM_MODEL")  # ARK 需要填 endpoint id
         if not model:
             raise SystemExit("使用 ARK 时请设置 LLM_MODEL 为你的推理接入点 ID")
-        return AsyncOpenAI(api_key=key, base_url="https://ark.cn-beijing.volces.com/api/v3"), model
+        client = AsyncOpenAI(api_key=key, base_url="https://ark.cn-beijing.volces.com/api/v3")
+        return client, model, _completion_params_for(model)
     key = os.getenv("OPENAI_API_KEY")
     if not key:
         raise SystemExit("未找到 OPENAI_API_KEY，请配置后重试（或设置 LLM_PROVIDER=moonshot/ark）。")
     model = os.getenv("LLM_MODEL", "gpt-4o-mini")
     base = os.getenv("OPENAI_BASE_URL")
-    return AsyncOpenAI(api_key=key, base_url=base) if base else AsyncOpenAI(api_key=key), model
+    client = AsyncOpenAI(api_key=key, base_url=base) if base else AsyncOpenAI(api_key=key)
+    return client, model, _completion_params_for(model)
 
 
 async def run_runtime(rt: AgentRuntime):
@@ -66,9 +84,9 @@ async def run_runtime(rt: AgentRuntime):
 
 # ------------------------------- 四个场景 -------------------------------
 
-async def scenario_1(client, model):
+async def scenario_1(client, model, params):
     banner("场景 1｜异步工具执行：长任务运行期间即时回应插入的提问")
-    rt = AgentRuntime(client, model)
+    rt = AgentRuntime(client, model, completion_params=params)
     serve = await run_runtime(rt)
 
     # 用户下达一个耗时的日志分析任务
@@ -84,9 +102,9 @@ async def scenario_1(client, model):
     await rt.stop(); await serve
 
 
-async def scenario_2(client, model):
+async def scenario_2(client, model, params):
     banner("场景 2｜事件队列与批量处理：非紧急指令累积，任务完成时一次性处理")
-    rt = AgentRuntime(client, model)
+    rt = AgentRuntime(client, model, completion_params=params)
     serve = await run_runtime(rt)
 
     await rt.submit_user_message(
@@ -103,9 +121,9 @@ async def scenario_2(client, model):
     await rt.stop(); await serve
 
 
-async def scenario_3(client, model):
+async def scenario_3(client, model, params):
     banner("场景 3｜打断机制：用户'取消'立即终止执行流并取消异步工具")
-    rt = AgentRuntime(client, model)
+    rt = AgentRuntime(client, model, completion_params=params)
     serve = await run_runtime(rt)
 
     await rt.submit_user_message(
@@ -119,9 +137,9 @@ async def scenario_3(client, model):
     await rt.stop(); await serve
 
 
-async def scenario_4(client, model):
+async def scenario_4(client, model, params):
     banner("场景 4｜并行工具的取消与状态查询：三脚本竞速 + 按 50% 阈值取消 + 整合报告")
-    rt = AgentRuntime(client, model)
+    rt = AgentRuntime(client, model, completion_params=params)
     serve = await run_runtime(rt)
 
     await rt.submit_user_message(
@@ -147,11 +165,11 @@ async def run_offline(names: list[str]) -> None:
 
 async def run_scenarios(which: int | None) -> None:
     """运行 LLM 驱动的验证场景（需要 API key）。"""
-    client, model = make_client()
+    client, model, params = make_client()
     print(f"使用模型：{model}")
     todo = [which] if which else [1, 2, 3, 4]
     for i in todo:
-        await SCENARIOS[i](client, model)
+        await SCENARIOS[i](client, model, params)
         await asyncio.sleep(0.5)
 
 

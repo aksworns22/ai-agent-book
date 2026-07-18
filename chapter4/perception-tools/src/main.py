@@ -50,7 +50,7 @@ Perception Tools MCP Server
 A comprehensive MCP server providing various perception and data retrieval capabilities:
 
 ## Search Tools
-- Web search using Google Custom Search API
+- Web search using DuckDuckGo (free, no API key required)
 - Local knowledge base search
 - File download from URLs
 

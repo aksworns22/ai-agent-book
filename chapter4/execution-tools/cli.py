@@ -284,16 +284,20 @@ def cmd_demo(args: argparse.Namespace) -> int:
         print("上下文中输出的尾部片段：")
         print(textwrap.indent("\n".join(stdout.splitlines()[-4:]), "  "))
 
-        # 7. 危险命令的 fail-safe 审批
-        section("7. virtual_terminal：危险命令触发审批（fail-safe）")
+        # 7. 危险命令的审批（离线 fail-safe / 在线交由真实 LLM 判断）
+        section("7. virtual_terminal：危险命令触发审批")
         os.environ["REQUIRE_APPROVAL_FOR_DANGEROUS_OPS"] = "true"
         # 目标是不存在的临时路径，即便被执行也无副作用。
         danger = await exec_tools.virtual_terminal(
             command="rm -rf /tmp/exec_tools_demo_nonexistent_path_xyz"
         )
         print(f"结果：success={danger['success']}")
-        print(f"说明：{danger.get('error')}")
-        print("（离线无 LLM 时，审批失败按 fail-safe 拒绝执行，危险命令未运行）")
+        if danger.get("error"):
+            print(f"说明：{danger.get('error')}")
+            print("（审批未通过：危险命令被拦截、未执行。离线无 LLM 时按 fail-safe 拒绝，"
+                  "在线时也可能被真实 LLM 判定为高风险而拒绝。）")
+        else:
+            print("（审批通过：已配置 API key，真实 LLM 判定该命令针对不存在路径、无副作用而放行。）")
 
         section("演示完成")
         print("覆盖的安全机制：自动 linter 校验、危险命令审批、长输出截断持久化。")

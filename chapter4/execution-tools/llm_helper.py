@@ -14,6 +14,29 @@ def _reasoning_safe_temperature(model, requested=1.0):
     return 1 if ("kimi-k3" in m or "gpt-5" in m) else requested
 
 
+def _parse_json_response(content):
+    """Parse a JSON object out of an LLM reply, tolerating markdown fences.
+
+    Reasoning models (notably kimi-k3) reliably return valid JSON but wrap it
+    in a ```json ... ``` code fence, so a bare json.loads() fails with
+    "Expecting value: line 1 column 1". Strip an optional fence and, as a last
+    resort, slice from the first '{' to the last '}' before parsing."""
+    text = (content or "").strip()
+    if text.startswith("```"):
+        # Drop the opening fence line (``` or ```json) and the closing fence.
+        text = text.split("\n", 1)[1] if "\n" in text else ""
+        if text.rstrip().endswith("```"):
+            text = text.rstrip()[:-3]
+        text = text.strip()
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        start, end = text.find("{"), text.rfind("}")
+        if start != -1 and end != -1 and end > start:
+            return json.loads(text[start:end + 1])
+        raise
+
+
 class LLMHelper:
     """Helper class for LLM-based operations."""
     
@@ -94,7 +117,7 @@ Respond in JSON format:
                 max_tokens=Config.MAX_TOKENS
             )
 
-            result = json.loads(response.choices[0].message.content)
+            result = _parse_json_response(response.choices[0].message.content)
             return result["approved"], result["reason"]
             
         except Exception as e:
@@ -255,7 +278,7 @@ Respond in JSON format:
                 max_tokens=Config.MAX_TOKENS
             )
             
-            result = json.loads(response.choices[0].message.content)
+            result = _parse_json_response(response.choices[0].message.content)
             if result["valid"]:
                 return True, None
             else:

@@ -113,9 +113,13 @@ def format_log(t0: float, source: str, text: str) -> str:
 
 
 class AgentRuntime:
-    def __init__(self, client, model: str, start_time: Optional[float] = None):
+    def __init__(self, client, model: str, start_time: Optional[float] = None,
+                 completion_params: Optional[dict] = None):
         self.client = client
         self.model = model
+        # 传给 chat.completions.create 的采样参数。默认 temperature=0.2 适合 gpt-4o-mini；
+        # 推理模型（如 Moonshot kimi-k3）需要 temperature=1 且 max_tokens>=2048，由 make_client 传入。
+        self.completion_params = completion_params or {"temperature": 0.2}
         self._t0 = start_time or time.time()
 
         self.trajectory: list[Event] = []          # 轨迹（工作记忆）
@@ -264,7 +268,7 @@ class AgentRuntime:
             _t = time.time()
             resp = await self.client.chat.completions.create(
                 model=self.model, messages=messages,
-                tools=TOOL_SCHEMAS, tool_choice="auto", temperature=0.2,
+                tools=TOOL_SCHEMAS, tool_choice="auto", **self.completion_params,
             )
             self.log("SYSTEM", f"LLM 调用耗时 {time.time()-_t:.2f}s（{len(messages)} 条消息）")
             msg = resp.choices[0].message
