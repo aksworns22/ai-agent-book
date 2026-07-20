@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 2044 782" width="2044" height="782">
+  <image x="0" y="0" width="2044" height="782" href="n8n-workflow.png" xlink:href="n8n-workflow.png"/>
+  <g font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" text-anchor="middle">
+    <rect x="315" y="76" width="470" height="46" fill="#dbeafa"/>
+    <text x="324" y="109" fill="#343a40" font-size="29" font-weight="bold" text-anchor="start">텔레그램 요청 처리</text>
+
+    <rect x="20" y="301" width="250" height="86" fill="#f8fafc"/>
+    <text x="145" y="329" fill="#343a40" font-size="22">수신 이벤트</text>
+    <text x="145" y="354" fill="#343a40" font-size="22">대기</text>
+    <text x="145" y="380" fill="#868e96" font-size="16">업데이트: 메시지</text>
+
+    <rect x="326" y="302" width="164" height="82" fill="#f8fafc"/>
+    <text x="408" y="330" fill="#343a40" font-size="21">음성 또는 텍스트</text>
+    <text x="408" y="358" fill="#868e96" font-size="16">수동</text>
+
+    <rect x="548" y="302" width="96" height="40" fill="#f8fafc"/>
+    <text x="596" y="329" fill="#343a40" font-size="21">조건</text>
+    <rect x="655" y="211" width="48" height="62" fill="#dbeafa"/>
+    <text x="679" y="230" fill="#868e96" font-size="14">참</text>
+    <text x="679" y="267" fill="#868e96" font-size="14">거짓</text>
+
+    <rect x="734" y="302" width="170" height="82" fill="#f8fafc"/>
+    <text x="819" y="330" fill="#343a40" font-size="21">음성 파일 가져오기</text>
+    <text x="819" y="358" fill="#868e96" font-size="16">가져오기: 파일</text>
+
+    <rect x="1004" y="302" width="195" height="82" fill="#f8fafc"/>
+    <text x="1101" y="330" fill="#343a40" font-size="21">음성을 텍스트로</text>
+    <text x="1101" y="358" fill="#868e96" font-size="16">녹음 전사</text>
+
+    <rect x="1305" y="210" width="185" height="68" fill="#ffffff"/>
+    <text x="1397" y="237" fill="#343a40" font-size="21">Angie, AI</text>
+    <text x="1397" y="263" fill="#343a40" font-size="21">비서 👩🏻‍💻</text>
+
+    <rect x="1227" y="304" width="284" height="39" fill="#f8fafc"/>
+    <text x="1275" y="329" fill="#6f75b5" font-size="15">채팅 모델*</text>
+    <text x="1394" y="329" fill="#6f75b5" font-size="15">메모리</text>
+    <text x="1453" y="329" fill="#6f75b5" font-size="15">도구</text>
+
+    <rect x="1700" y="302" width="304" height="82" fill="#f8fafc"/>
+    <text x="1888" y="330" fill="#343a40" font-size="21">텔레그램</text>
+    <text x="1888" y="358" fill="#868e96" font-size="16">메시지 전송</text>
+
+    <rect x="1065" y="523" width="90" height="34" fill="#f8fafc"/>
+    <text x="1110" y="547" fill="#6f75b5" font-size="15">모델</text>
+    <rect x="1215" y="523" width="90" height="34" fill="#f8fafc"/>
+    <text x="1260" y="547" fill="#6f75b5" font-size="15">메모리</text>
+
+    <rect x="1005" y="669" width="930" height="70" fill="#f8fafc"/>
+    <text x="1106" y="697" fill="#343a40" font-size="20">OpenAI 채팅 모델</text>
+    <text x="1257" y="697" fill="#343a40" font-size="20">윈도 버퍼 메모리</text>
+    <text x="1397" y="697" fill="#343a40" font-size="20">이메일 가져오기</text>
+    <text x="1548" y="697" fill="#343a40" font-size="20">구글 캘린더</text>
+    <text x="1685" y="697" fill="#343a40" font-size="20">작업</text>
+    <text x="1838" y="697" fill="#343a40" font-size="20">연락처</text>
+    <text x="1397" y="725" fill="#868e96" font-size="15">모두 가져오기: 메시지</text>
+    <text x="1548" y="725" fill="#868e96" font-size="15">모두 가져오기: 이벤트</text>
+    <text x="1685" y="725" fill="#868e96" font-size="15">모두 가져오기: 행</text>
+    <text x="1838" y="725" fill="#868e96" font-size="15">모두 가져오기: 행</text>
+  </g>
+</svg>
