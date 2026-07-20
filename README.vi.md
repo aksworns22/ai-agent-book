@@ -1,19 +1,19 @@
 # Hiểu sâu về AI Agent: Nguyên lý thiết kế và thực hành kỹ thuật
 
-**[English](README.en.md) | [中文](README.md) | Tiếng Việt**
+**[English](README.en.md) | [中文](README.md) | Tiếng Việt | [தமிழ்](README.ta.md)**
 
 Kho này là kho mã nguồn mở chính thức của cuốn sách *Hiểu sâu về AI Agent: Nguyên lý thiết kế và thực hành kỹ thuật*, bao gồm **toàn bộ nội dung sách** và **mã ví dụ đi kèm**. Toàn bộ bản thảo, hình minh họa và mã thí nghiệm đều được mở nguồn; hoan nghênh bạn tự chạy các thí nghiệm, gửi issue và PR.
 
 ## 📖 Sách điện tử
 
-Mã nguồn của bản dịch tiếng Việt nằm trong thư mục [`book-vi/`](book-vi/). Bản
+Mã nguồn của bản dịch tiếng Việt (do [@toanalien](https://github.com/toanalien) đóng góp) nằm trong thư mục [`book-vi/`](book-vi/). Bản
 gốc tiếng Trung ở [`book/`](book/), bản tiếng Anh ở [`book-en/`](book-en/) và
 bản Tamil ở [`book-ta/`](book-ta/).
 
 - **Mã nguồn tiếng Việt**: `book-vi/introduction.vi.md` (lời mở đầu),
   `book-vi/chapter1.vi.md` ~ `book-vi/chapter10.vi.md` (chương 1 đến chương 10),
   `book-vi/afterword.vi.md` (lời bạt)
-- **Bản PDF đã biên dịch**: [PDF bản gốc tiếng Trung](book/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-AI-Agent-%E6%9D%8E%E5%8D%9A%E6%9D%B0-v1.1.pdf)
+- **Bản PDF đã biên dịch**: [PDF tiếng Việt](book-vi/AI-Agents-in-Depth-Bojie-Li-v1.1-vi.pdf) · [PDF bản gốc tiếng Trung](book/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-AI-Agent-%E6%9D%8E%E5%8D%9A%E6%9D%B0-v1.1.pdf)
 - **Tự biên dịch**: sau khi cài pandoc, xelatex, lớp tài liệu ElegantBook và các phông chữ liên quan, chạy
 
   ```bash

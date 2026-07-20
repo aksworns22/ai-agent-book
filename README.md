@@ -1,6 +1,6 @@
 # 深入理解 AI Agent：设计原理与工程实践
 
-**[English](README.en.md) | 中文 | [Tiếng Việt](README.vi.md)**
+**[English](README.en.md) | 中文 | [Tiếng Việt](README.vi.md) | [தமிழ்](README.ta.md)**
 
 本仓库是《深入理解 AI Agent：设计原理与工程实践》一书的开源主仓库，包含**全书正文**与**配套示例代码**。全书正文、配图与配套实验代码全部开源，欢迎把实验亲手跑一遍、提 issue 和 PR。
 
@@ -11,7 +11,7 @@
 - **中文 PDF（原版）**：[`book/深入理解-AI-Agent-李博杰-v1.1.pdf`](book/深入理解-AI-Agent-李博杰-v1.1.pdf)
 - **英文 PDF**（社区贡献翻译，by [@nsdevaraj](https://github.com/nsdevaraj)）：[`book-en/AI-Agents-in-Depth-Bojie-Li-v1.1.pdf`](book-en/AI-Agents-in-Depth-Bojie-Li-v1.1.pdf)
 - **泰米尔语 PDF**（社区贡献翻译，by [@nsdevaraj](https://github.com/nsdevaraj)）：[`book-ta/AI-Agents-in-Depth-Bojie-Li-v1.1-ta.pdf`](book-ta/AI-Agents-in-Depth-Bojie-Li-v1.1-ta.pdf)
-- **越南语版本源码**（社区贡献翻译）：[`book-vi/`](book-vi/)
+- **越南语 PDF**（社区贡献翻译，by [@toanalien](https://github.com/toanalien)）：[`book-vi/AI-Agents-in-Depth-Bojie-Li-v1.1-vi.pdf`](book-vi/AI-Agents-in-Depth-Bojie-Li-v1.1-vi.pdf)
 
 中文正文与编译好的 PDF 位于 [`book/`](book/) 目录；英文、泰米尔语与越南语翻译为**社区贡献**，分别位于 [`book-en/`](book-en/)、[`book-ta/`](book-ta/) 与 [`book-vi/`](book-vi/) 目录，内容可能滞后于中文原版：
 
