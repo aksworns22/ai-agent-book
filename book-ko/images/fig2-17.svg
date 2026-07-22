@@ -1,65 +1,65 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 40 820 560" width="820" height="560" style="background:#ffffff">
 <defs><marker id="ah" markerWidth="12" markerHeight="8" refX="12" refY="4" orient="auto"><polygon points="0 0, 12 4, 0 8" fill="#333333"/></marker><marker id="ah-light" markerWidth="12" markerHeight="8" refX="12" refY="4" orient="auto"><polygon points="0 0, 12 4, 0 8" fill="#999999"/></marker></defs>
 
-<text x="410" y="58" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="16" fill="#666666" text-anchor="middle" dominant-baseline="central" font-weight="normal">검색 1회당 약 7만 자 반환 → 전략마다 처리 방식이 다르다</text>
+<text x="410" y="58" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="16" fill="#666666" text-anchor="middle" dominant-baseline="central" font-weight="normal">검색 1회당 약 7만 자 반환 → 전략마다 처리 방식이 다르다</text>
 <rect x="30" y="75" width="130" height="26" rx="13" fill="#999999" stroke="#333333" stroke-width="2"/>
-<text x="95.0" y="88.0" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="13.5" fill="#ffffff" text-anchor="middle" dominant-baseline="central" font-weight="bold">① 압축 없음</text>
+<text x="95.0" y="88.0" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" fill="#ffffff" text-anchor="middle" dominant-baseline="central" font-weight="bold">① 압축 없음</text>
 <rect x="30" y="105" width="120" height="40" rx="4" fill="#e8e8e8" stroke="#333333" stroke-width="2"/>
-<text x="90" y="125" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="16" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">그대로 유지</text>
+<text x="90" y="125" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="16" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">그대로 유지</text>
 <line x1="152" y1="125" x2="165" y2="125" stroke="#333333" stroke-width="2" marker-end="url(#ah)"/>
 <rect x="168" y="105" width="330" height="40" rx="4" fill="#f5f5f5" stroke="#999999" stroke-width="2"/>
-<text x="333" y="125" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="14" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">원문 전체를 컨텍스트에 삽입</text>
+<text x="333" y="125" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">원문 전체를 컨텍스트에 삽입</text>
 <line x1="500" y1="125" x2="513" y2="125" stroke="#333333" stroke-width="2" marker-end="url(#ah)"/>
 <rect x="516" y="105" width="275" height="40" rx="4" fill="#ffffff" stroke="#333333" stroke-width="2"/>
-<text x="653" y="125" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="14" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">&gt; 110K토큰 → 초과</text>
+<text x="653" y="125" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">&gt; 110K토큰 → 초과</text>
 <rect x="30" y="153" width="130" height="26" rx="13" fill="#999999" stroke="#333333" stroke-width="2"/>
-<text x="95.0" y="166.0" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="11.5" fill="#ffffff" text-anchor="middle" dominant-baseline="central" font-weight="bold">② 개별 요약</text>
+<text x="95.0" y="166.0" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" fill="#ffffff" text-anchor="middle" dominant-baseline="central" font-weight="bold">② 개별 요약</text>
 <rect x="30" y="183" width="120" height="40" rx="4" fill="#e8e8e8" stroke="#333333" stroke-width="2"/>
-<text x="90" y="203" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">독립적으로 요약</text>
+<text x="90" y="203" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="16" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">독립적으로 요약</text>
 <line x1="152" y1="203" x2="165" y2="203" stroke="#333333" stroke-width="2" marker-end="url(#ah)"/>
 <rect x="168" y="183" width="330" height="40" rx="4" fill="#f5f5f5" stroke="#999999" stroke-width="2"/>
-<text x="333" y="203" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">각 결과를 따로 2~3개 문단으로 요약</text>
+<text x="333" y="203" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">각 결과를 따로 2~3개 문단으로 요약</text>
 <line x1="500" y1="203" x2="513" y2="203" stroke="#333333" stroke-width="2" marker-end="url(#ah)"/>
 <rect x="516" y="183" width="275" height="40" rx="4" fill="#f0f0f0" stroke="#333333" stroke-width="2"/>
-<text x="653" y="203" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="14" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">123K토큰 · 6.8%</text>
+<text x="653" y="203" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">123K토큰 · 6.8%</text>
 <rect x="30" y="231" width="130" height="26" rx="13" fill="#999999" stroke="#333333" stroke-width="2"/>
-<text x="95.0" y="244.0" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="11" fill="#ffffff" text-anchor="middle" dominant-baseline="central" font-weight="bold">③ 통합 요약</text>
+<text x="95.0" y="244.0" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" fill="#ffffff" text-anchor="middle" dominant-baseline="central" font-weight="bold">③ 통합 요약</text>
 <rect x="30" y="261" width="120" height="40" rx="4" fill="#e8e8e8" stroke="#333333" stroke-width="2"/>
-<text x="90" y="281" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="14" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">한꺼번에 요약</text>
+<text x="90" y="281" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="16" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">한꺼번에 요약</text>
 <line x1="152" y1="281" x2="165" y2="281" stroke="#333333" stroke-width="2" marker-end="url(#ah)"/>
 <rect x="168" y="261" width="330" height="40" rx="4" fill="#f5f5f5" stroke="#999999" stroke-width="2"/>
-<text x="333" y="281" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="14" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">모든 결과를 합친 뒤 한 번에 요약</text>
+<text x="333" y="281" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">모든 결과를 합친 뒤 한 번에 요약</text>
 <line x1="500" y1="281" x2="513" y2="281" stroke="#333333" stroke-width="2" marker-end="url(#ah)"/>
 <rect x="516" y="261" width="275" height="40" rx="4" fill="#f0f0f0" stroke="#333333" stroke-width="2"/>
-<text x="653" y="281" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="14" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">55K토큰 · 2.1%</text>
+<text x="653" y="281" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">55K토큰 · 2.1%</text>
 <rect x="30" y="309" width="130" height="26" rx="13" fill="#666666" stroke="#333333" stroke-width="2"/>
-<text x="95.0" y="322.0" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle" dominant-baseline="central" font-weight="bold">④ 컨텍스트 인식</text>
+<text x="95.0" y="322.0" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" fill="#ffffff" text-anchor="middle" dominant-baseline="central" font-weight="bold">④ 컨텍스트 인식</text>
 <rect x="30" y="339" width="120" height="40" rx="4" fill="#e8e8e8" stroke="#333333" stroke-width="2"/>
-<text x="90" y="359" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="10.5" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">질의 맞춤 압축</text>
+<text x="90" y="359" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="16" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">질의 맞춤 압축</text>
 <line x1="152" y1="359" x2="165" y2="359" stroke="#333333" stroke-width="2" marker-end="url(#ah)"/>
 <rect x="168" y="339" width="330" height="40" rx="4" fill="#f5f5f5" stroke="#999999" stroke-width="2"/>
-<text x="333" y="359" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="14" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">질의 + 컨텍스트를 반영해 필요한 내용만 압축</text>
+<text x="333" y="359" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">질의 + 컨텍스트를 반영해 필요한 내용만 압축</text>
 <line x1="500" y1="359" x2="513" y2="359" stroke="#333333" stroke-width="2" marker-end="url(#ah)"/>
 <rect x="516" y="339" width="275" height="40" rx="4" fill="#d0d0d0" stroke="#333333" stroke-width="2"/>
-<text x="653" y="359" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="14" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">25K토큰 · 0.9%</text>
+<text x="653" y="359" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">25K토큰 · 0.9%</text>
 <rect x="30" y="387" width="130" height="26" rx="13" fill="#999999" stroke="#333333" stroke-width="2"/>
-<text x="95.0" y="400.0" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="9.5" fill="#ffffff" text-anchor="middle" dominant-baseline="central" font-weight="bold">⑤ 컨텍스트 인식 + 인용</text>
+<text x="95.0" y="400.0" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" fill="#ffffff" text-anchor="middle" dominant-baseline="central" font-weight="bold">⑤ 인식 + 인용</text>
 <rect x="30" y="417" width="120" height="40" rx="4" fill="#e8e8e8" stroke="#333333" stroke-width="2"/>
-<text x="90" y="437" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="10.5" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">맞춤 압축 + 추적 가능성</text>
+<text x="90" y="437" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="16" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">압축 + 추적</text>
 <line x1="152" y1="437" x2="165" y2="437" stroke="#333333" stroke-width="2" marker-end="url(#ah)"/>
 <rect x="168" y="417" width="330" height="40" rx="4" fill="#f5f5f5" stroke="#999999" stroke-width="2"/>
-<text x="333" y="437" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="14" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">내용은 압축하고 URL 인용 표시는 유지</text>
+<text x="333" y="437" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">내용은 압축하고 URL 인용 표시는 유지</text>
 <line x1="500" y1="437" x2="513" y2="437" stroke="#333333" stroke-width="2" marker-end="url(#ah)"/>
 <rect x="516" y="417" width="275" height="40" rx="4" fill="#f0f0f0" stroke="#333333" stroke-width="2"/>
-<text x="653" y="437" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="14" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">45K토큰 · 1.4%</text>
+<text x="653" y="437" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">45K토큰 · 1.4%</text>
 <rect x="30" y="465" width="130" height="26" rx="13" fill="#999999" stroke="#333333" stroke-width="2"/>
-<text x="95.0" y="478.0" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="13" fill="#ffffff" text-anchor="middle" dominant-baseline="central" font-weight="bold">⑥ 적응형 윈도</text>
+<text x="95.0" y="478.0" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" fill="#ffffff" text-anchor="middle" dominant-baseline="central" font-weight="bold">⑥ 적응형 윈도</text>
 <rect x="30" y="495" width="120" height="40" rx="4" fill="#e8e8e8" stroke="#333333" stroke-width="2"/>
-<text x="90" y="515" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">압축 시점 지연</text>
+<text x="90" y="515" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="16" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">압축 시점 지연</text>
 <line x1="152" y1="515" x2="165" y2="515" stroke="#333333" stroke-width="2" marker-end="url(#ah)"/>
 <rect x="168" y="495" width="330" height="40" rx="4" fill="#f5f5f5" stroke="#999999" stroke-width="2"/>
-<text x="333" y="515" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="10.5" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">윈도 80% 미만이면 원문 유지, 넘으면 일괄 압축</text>
+<text x="333" y="515" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">윈도 80% 미만이면 원문 유지, 넘으면 일괄 압축</text>
 <line x1="500" y1="515" x2="513" y2="515" stroke="#333333" stroke-width="2" marker-end="url(#ah)"/>
 <rect x="516" y="495" width="275" height="40" rx="4" fill="#f0f0f0" stroke="#333333" stroke-width="2"/>
-<text x="653" y="515" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="14" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">181K토큰 · 원문 충실도 최대</text>
+<text x="653" y="515" font-family="Arial, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" fill="#333333" text-anchor="middle" dominant-baseline="central" font-weight="normal">181K토큰 · 원문 충실도 최대</text>
 </svg>

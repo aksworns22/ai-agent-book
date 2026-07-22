@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 3524 896" width="3524" height="896">
   <image x="0" y="0" width="3524" height="896" href="fig2-7.png" xlink:href="fig2-7.png"/>
-  <rect x="1580" y="770" width="365" height="80" fill="#ffffff"/>
-  <text x="1762" y="838" font-family="'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif" font-size="16" fill="#333333" text-anchor="middle">어텐션 가중치</text>
+  <rect x="1640" y="780" width="244" height="32" fill="#ffffff"/>
+  <text x="1762" y="807" font-family="Arial, sans-serif" font-size="22" fill="#262626" text-anchor="middle">어텐션 가중치</text>
 </svg>
